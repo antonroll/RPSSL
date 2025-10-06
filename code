@@ -1,0 +1,51 @@
+using System;
+
+class RPSSL
+{
+    static void Main()
+    {
+        string[] moves = { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
+        int player = 0, bot = 0, maxPoints = 3;
+
+        Console.WriteLine("=== Rock · Paper · Scissors · Lizard · Spock ===\n");
+
+        var rand = new Random();
+
+        while (player < maxPoints && bot < maxPoints)
+        {
+            Console.Write("Choose (Rock, Paper, Scissors, Lizard, Spock): ");
+            string input = (Console.ReadLine() ?? "").Trim();
+            int userPick = Array.IndexOf(moves, input);
+
+            if (userPick == -1)
+            {
+                Console.WriteLine("Invalid choice, try again.\n");
+                continue;
+            }
+
+            int botPick = rand.Next(moves.Length);
+            Console.WriteLine($"Bot chose: {moves[botPick]}");
+
+            int diff = (userPick - botPick + 5) % 5;
+
+            if (diff == 0)
+            {
+                Console.WriteLine("Draw!\n");
+            }
+            else if (diff == 1 || diff == 2)
+            {
+                Console.WriteLine("You win this round!\n");
+                player++;
+            }
+            else
+            {
+                Console.WriteLine("Bot wins this round!\n");
+                bot++;
+            }
+
+            Console.WriteLine($"Score → You: {player} | Bot: {bot}\n");
+        }
+
+        Console.WriteLine(player == maxPoints ? "You win the match!" : "Bot wins the match!");
+    }
+}
